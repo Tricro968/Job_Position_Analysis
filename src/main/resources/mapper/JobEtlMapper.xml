@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.jobanalysis.mapper.JobEtlMapper">
+
+    <select id="selectPageByCondition" resultType="com.example.jobanalysis.entity.JobEtl">
+        SELECT * FROM job_etl WHERE 1=1
+        <if test="jobName != null and jobName != ''">
+            AND job_name LIKE CONCAT('%', #{jobName}, '%')
+        </if>
+        <if test="city != null and city != ''">
+            AND city = #{city}
+        </if>
+        <if test="district != null and district != ''">
+            AND district = #{district}
+        </if>
+        <if test="degree != null and degree != ''">
+            AND degree = #{degree}
+        </if>
+        <if test="companySize != null and companySize != ''">
+            AND company_size = #{companySize}
+        </if>
+    </select>
+
+</mapper>
