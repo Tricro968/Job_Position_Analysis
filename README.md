@@ -94,7 +94,30 @@ job-analysis/
 CREATE DATABASE job_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```
 
-2. 导入数据（如有数据文件）
+2. 创建数据表：
+```sql
+CREATE TABLE job_etl (
+    id           BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT '主键ID',
+    job_name     TEXT COMMENT '岗位名称',
+    city         TEXT COMMENT '城市',
+    district     TEXT COMMENT '行政区',
+    salary_min   INT COMMENT '最低薪资(元)',
+    salary_max   INT COMMENT '最高薪资(元)',
+    work_year    TEXT COMMENT '工作经验要求',
+    degree       TEXT COMMENT '学历要求',
+    company_size TEXT COMMENT '企业规模',
+    company_type TEXT COMMENT '企业类型',
+    industry     TEXT COMMENT '产业类型',
+    publish_date DATE COMMENT '发布日期',
+    keyword      TEXT COMMENT '关键词',
+    company_name TEXT COMMENT '公司名称',
+    INDEX idx_city (city(50)),
+    INDEX idx_industry (industry(50)),
+    INDEX idx_publish_date (publish_date)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='招聘数据ETL表';
+```
+
+3. 导入数据（如有数据文件）
 
 ### 后端启动
 
@@ -165,13 +188,13 @@ npm run build
 
 ```yaml
 server:
-  port: 8080
+  port: 8080  # 服务端口（可选）
 
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/job_db
-    username: root
-    password: 1234
+    url: jdbc:mysql://localhost:3306/job_db  # 数据库连接URL（最后的斜杠后改为你存储job_etl数据库名称）
+    username: root  # 这里改为你的数据库用户名
+    password: 1234  # 这里改为你的数据库密码
 
 mybatis-plus:
   configuration:
@@ -188,17 +211,20 @@ mybatis-plus:
 
 | 字段名 | 类型 | 描述 |
 | --- | --- | --- |
-| id | BIGINT | 主键 |
-| job_name | VARCHAR | 岗位名称 |
-| industry | VARCHAR | 产业类型 |
-| district | VARCHAR | 行政区 |
-| company_size | VARCHAR | 企业规模 |
-| education | VARCHAR | 学历要求 |
-| work_year | VARCHAR | 工作经验要求 |
-| salary_min | DECIMAL | 最低薪资 |
-| salary_max | DECIMAL | 最高薪资 |
-| keyword | VARCHAR | 关键词 |
+| id | BIGINT | 主键ID（自增） |
+| job_name | TEXT | 岗位名称 |
+| city | TEXT | 城市 |
+| district | TEXT | 行政区 |
+| salary_min | INT | 最低薪资（元） |
+| salary_max | INT | 最高薪资（元） |
+| work_year | TEXT | 工作经验要求 |
+| degree | TEXT | 学历要求 |
+| company_size | TEXT | 企业规模 |
+| company_type | TEXT | 企业类型 |
+| industry | TEXT | 产业类型 |
 | publish_date | DATE | 发布日期 |
+| keyword | TEXT | 关键词 |
+| company_name | TEXT | 公司名称 |
 
 ## 开发规范
 
