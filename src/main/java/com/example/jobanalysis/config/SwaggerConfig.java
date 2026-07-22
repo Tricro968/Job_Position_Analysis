@@ -1,0 +1,23 @@
+package com.example.jobanalysis.config;
+
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Contact;
+import io.swagger.v3.oas.models.info.Info;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class SwaggerConfig {
+
+    @Bean
+    public OpenAPI customOpenAPI() {
+        return new OpenAPI()
+                .info(new Info()
+                        .title("招聘数据分析平台 API")
+                        .version("1.0.0")
+                        .description("招聘数据查询与分析接口文档")
+                        .contact(new Contact()
+                                .name("Job Analysis Team")
+                                .email("support@example.com")));
+    }
+}
